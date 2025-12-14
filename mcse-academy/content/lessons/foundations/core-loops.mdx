@@ -1,0 +1,58 @@
+---
+id: foundations-core-loops
+title: "Core Loops"
+module: foundations
+level: Beginner
+summary: "Monitoring, critique, calibration, and adaptation loops."
+prerequisites: [foundations-what-is-mcse]
+tags: [loops]
+estimatedTime: "20 min"
+learningObjectives:
+  - "Name the core meta-cognitive loops"
+  - "Explain monitor vs critic vs calibrate"
+  - "Describe adaptation cadence"
+glossaryTerms: [monitor, critic, calibrate]
+references: ["loop patterns"]
+---
+
+## Concept explanation
+Monitoring captures signals, critique checks against policies, calibration scores confidence, adaptation updates policies/tools. Loops must be explicit with thresholds and fallbacks.
+
+<MermaidBlock chart={`flowchart LR
+  Observe-->Monitor
+  Monitor-->Critic
+  Critic-->Calibrate
+  Calibrate-->Decide
+  Decide-->Act
+  Act-->Observe
+`} caption="Meta-loop around cognition." />
+
+<QuizBlock
+  id="foundations-core-quiz"
+  prompt="What triggers adaptation?"
+  options=["Any error", "Policy or metric crossing threshold", "Daily cron", "Random"]
+  answer={1}
+  explanation="Adaptation should be tied to explicit thresholds and governance."
+/>
+
+<ExerciseBlock
+  id="foundations-core-ex"
+  prompt="List two monitor signals and two critique rules for your system."
+  rubric="Signals measurable; rules actionable."
+/>
+
+<ArtifactBlock
+  id="foundations-core-artifact"
+  kind="policy"
+  description="Outline monitor + critique policy."
+  starter={`policyVersion: v1\nmonitor:\n  - signal: calibration_ece\n    threshold: 0.05\n    action: warn\n  - signal: drift_psi\n    threshold: 0.2\n    action: escalate\ncritique:\n  - rule: "no tool X without justification"\n    enforcement: block\n`}
+/>
+
+### Failure mode focus
+- Silent monitors (no thresholds). Mitigate with alerts + actions.
+- Critic without teeth. Mitigate with block/abstain actions.
+
+### References
+- Control loop design basics
+- MCSE policy examples
+

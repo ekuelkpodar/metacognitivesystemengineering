@@ -1,0 +1,64 @@
+---
+id: control-feedback-vs-feedforward
+title: "Feedback vs Feedforward Control"
+module: control-loops
+level: Intermediate
+summary: "Design feedback and feedforward loops for cognitive and meta-cognitive control."
+prerequisites: [foundations-core-loops]
+tags: [control, feedback]
+estimatedTime: "28 min"
+learningObjectives:
+  - "Explain feedback vs feedforward in MCSE"
+  - "Place sensors and actuators in cognitive stacks"
+  - "Design stability and responsiveness tradeoffs"
+glossaryTerms: [feedback, feedforward, stability]
+references: ["control theory primer"]
+---
+
+<Callout type="info" title="Concept">
+Feedback loops compare expected vs observed outcomes; feedforward anticipates disturbances. In MCSE, feedback loops wrap cognition (plan -> act -> observe) while feedforward uses environment signals (volatility, risk) to pre-adjust policies.
+</Callout>
+
+<MermaidBlock chart={`flowchart LR
+  Disturbance-->FF[Feedforward Adjust]
+  Input-->Plan
+  FF-->Plan
+  Plan-->Act
+  Act-->Outcome
+  Outcome-->Compare
+  Compare-->Plan
+`} caption="Feedforward pre-adjusts, feedback corrects." />
+
+- Feedback catches deviations; slower but stabilizing.
+- Feedforward speeds response to known shifts (e.g., spike in adversarial prompts).
+- Combine both for robustness: pre-adjust risk budgets then confirm via telemetry.
+
+<QuizBlock
+  id="control-feedback-quiz"
+  prompt="When is feedforward most valuable?"
+  options=["Unknown shifts", "Predictable disturbances like traffic spikes", "Never", "Only in hardware"]
+  answer={1}
+  explanation="Feedforward is helpful when you can sense disturbances early (e.g., volatility flags)."
+/>
+
+<ExerciseBlock
+  id="control-feedback-ex"
+  prompt="Identify one feedback signal and one feedforward signal for your system. Define how each changes policy."
+  rubric="Tie signals to actions (adjust thresholds/budgets)."
+/>
+
+<ArtifactBlock
+  id="control-feedback-artifact"
+  kind="policy"
+  description="Author a control policy combining feedback and feedforward."
+  starter={`policyVersion: v1\nfeedforward:\n  - signal: env_volatility\n    threshold: 0.6\n    action: tighten_tool_allowlist\nfeedback:\n  - signal: recovery_time\n    threshold: 5s\n    action: escalate\n`}
+/>
+
+### Failure mode focus
+- Over-feedback -> oscillation. Mitigate with damping, hysteresis.
+- Missing feedforward -> slow to known shocks. Add volatility sensors.
+
+### References
+- Control theory for software systems
+- MCSE damping patterns
+

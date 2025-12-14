@@ -1,0 +1,64 @@
+---
+id: architecture-observability-audit
+title: "Observability and Auditability"
+module: architecture
+level: Intermediate
+summary: "Instrument telemetry, traces, and audit logs for MCSE."
+prerequisites: [architecture-interfaces-contracts]
+tags: [observability, audit]
+estimatedTime: "18 min"
+learningObjectives:
+  - "Define telemetry events"
+  - "Trace meta-cog decisions"
+  - "Make audit logs immutable"
+glossaryTerms: [audit log, trace]
+references: ["telemetry spec"]
+---
+
+## Concept explanation
+Observability is required to debug cognition and meta-cognition. Emit structured events with ids, policy versions, and risk. Audit logs must be tamper-evident and retained.
+
+<MermaidBlock chart={`graph LR
+  Events-->Ingest[Ingest]
+  Ingest-->Storage[Cold Storage]
+  Ingest-->Dash[Dashboards]
+  Ingest-->Alerts
+  Alerts-->Oncall
+`} caption="Telemetry fan-out." />
+
+<QuizBlock
+  id="architecture-observability-quiz"
+  prompt="What must every audit log include?"
+  options=["User mood", "Policy version and actor", "Random number", "Nothing"]
+  answer={1}
+  explanation="Audit logs need actor, policy version, timestamps, and decision details."
+/>
+
+<ExerciseBlock
+  id="architecture-observability-ex"
+  prompt="Define three events you will log and where they are consumed (dash, alert, storage)."
+  rubric="Include fields for confidence and risk."
+/>
+
+<ArtifactBlock
+  id="architecture-observability-artifact"
+  kind="telemetry"
+  description="Audit log schema."
+  starter={`{
+  "event": "safety_block",
+  "id": "uuid",
+  "actor": "safety-engine",
+  "policyVersion": "v1",
+  "reason": "risk>0.3",
+  "timestamp": ""
+}
+`}
+/>
+
+### Failure mode focus
+- Missing IDs -> cannot trace. Mitigate with uuid per plan/action.
+- Logs overwritten. Mitigate with append-only storage + hashing.
+
+### References
+- Observability design
+

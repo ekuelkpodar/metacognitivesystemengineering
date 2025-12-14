@@ -1,0 +1,60 @@
+---
+id: case-logistics
+title: "Case Study: Logistics Planning Agent"
+module: case-studies
+level: Intermediate
+summary: "Routing and planning under volatility with safety gates."
+prerequisites: [control-drift-modeling]
+tags: [case study, logistics]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Handle volatility"
+  - "Calibrate risk vs cost"
+  - "Design eval scenarios"
+glossaryTerms: [volatility, drift]
+references: ["logistics"]
+---
+
+## Concept explanation
+Routing agents face volatile demand and constraints. Use feedforward volatility signals, cost budgets, and human review for high-impact reroutes.
+
+<MermaidBlock chart={`graph LR
+  Forecast-->Vol[Volatility]
+  Vol-->Planner
+  Planner-->Safety
+  Safety-->Executor
+`} caption="Logistics MCSE." />
+
+<QuizBlock
+  id="case-logistics-quiz"
+  prompt="What triggers human review?"
+  options=["Minor delays", "High cost impact or low confidence", "Nothing", "Colors"]
+  answer={1}
+  explanation="High impact + low confidence should escalate." 
+/>
+
+<ExerciseBlock
+  id="case-logistics-ex"
+  prompt="Define one volatility threshold and corresponding action."
+  rubric="Tie to policy." 
+/>
+
+<ArtifactBlock
+  id="case-logistics-artifact"
+  kind="evaluation"
+  description="Scenario test JSON."
+  starter={`{
+  "scenario": "port_closure",
+  "expected_action": "reroute",
+  "metrics": {"cost_delta": 0.1, "recovery_time": 3600}
+}
+`}
+/>
+
+### Failure mode focus
+- Overreact to noise. Fix with hysteresis.
+- Ignoring cost. Fix with budgets + alerts.
+
+### References
+- Ops playbooks
+

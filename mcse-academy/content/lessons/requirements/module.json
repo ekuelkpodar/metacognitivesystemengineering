@@ -1,0 +1,7 @@
+{
+  "id": "requirements",
+  "title": "Requirements & Specs",
+  "description": "Meta-cognitive requirements, traceability, and policy-as-code.",
+  "order": 4,
+  "level": "Intermediate"
+}

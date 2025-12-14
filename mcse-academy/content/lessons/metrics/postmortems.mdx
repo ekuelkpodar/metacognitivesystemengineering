@@ -1,0 +1,56 @@
+---
+id: metrics-postmortems
+title: "Postmortems for Meta-Cognitive Incidents"
+module: metrics
+level: Intermediate
+summary: "Structure incident analysis with meta-cog focus and feed improvements."
+prerequisites: [metrics-online-monitoring]
+tags: [postmortem]
+estimatedTime: "18 min"
+learningObjectives:
+  - "Run postmortems"
+  - "Capture meta signals that failed"
+  - "Feed learnings into policies/tests"
+glossaryTerms: [postmortem, RCA]
+references: ["incident review"]
+---
+
+## Concept explanation
+Postmortems capture what failed in cognition and meta-cognition: missing signals, thresholds too high, absent fallbacks. Outputs include fixes, tests, and policy updates with owners.
+
+<MermaidBlock chart={`graph TD
+  Incident-->RCA
+  RCA-->Actions
+  Actions-->Tests
+  Actions-->Policies
+  Actions-->KB[Knowledge Base]
+`} caption="Postmortem learning loop." />
+
+<QuizBlock
+  id="metrics-postmortem-quiz"
+  prompt="What must a postmortem output?"
+  options=["Blame", "Action items with owners and deadlines", "Nothing", "More dashboards"]
+  answer={1}
+  explanation="Postmortems must output action items with owners and deadlines."
+/>
+
+<ExerciseBlock
+  id="metrics-postmortem-ex"
+  prompt="Draft a postmortem skeleton for a miscalibration incident."
+  rubric="Include signals that failed and tests to add." 
+/>
+
+<ArtifactBlock
+  id="metrics-postmortem-artifact"
+  kind="requirements"
+  description="Postmortem template markdown."
+  starter={`# Postmortem\n- Incident: \n- Impact: \n- Time to detect: \n- Time to recover: \n- Signals that failed: \n- Root causes: \n- Actions: \n- Tests to add: \n`}
+/>
+
+### Failure mode focus
+- Postmortem theater: no actions. Fix with owners + tracking.
+- Forgetting to update tests. Fix with checklist in template.
+
+### References
+- SRE postmortem guides
+

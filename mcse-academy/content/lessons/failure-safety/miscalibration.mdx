@@ -1,0 +1,61 @@
+---
+id: failure-miscalibration
+title: "Miscalibration and Overconfidence"
+module: failure-safety
+level: Intermediate
+summary: "Detect and mitigate confidently-wrong behavior."
+prerequisites: [control-confidence-calibration]
+tags: [failure]
+estimatedTime: "24 min"
+learningObjectives:
+  - "Spot miscalibration signals"
+  - "Apply mitigations"
+  - "Test selective prediction"
+glossaryTerms: [miscalibration, ECE]
+references: ["calibration tests"]
+---
+
+<Callout type="warn" title="Concept">
+Miscalibration is when confidence diverges from correctness. Overconfident systems harm users and bypass safety gates.
+</Callout>
+
+<MermaidBlock chart={`graph LR
+  Predict-->Confidence
+  Predict-->Outcome
+  Confidence-->Compare[Compare vs Outcome]
+  Compare-->ECE
+  ECE-->Policy
+  Policy-->Abstain
+`} caption="Calibration feedback." />
+
+Detection signals: high confidence + incorrect, low entropy outputs, disagreement between models.
+Mitigations: temperature scaling, ensemble disagreement flags, abstain thresholds, human review for high-risk.
+
+<QuizBlock
+  id="failure-miscalibration-quiz"
+  prompt="Best mitigation for high-risk low-confidence?"
+  options=["Proceed anyway", "Abstain/escalate", "Ignore", "Increase temperature"]
+  answer={1}
+  explanation="Abstain or escalate protects users when confidence is low on high-risk tasks." 
+/>
+
+<ExerciseBlock
+  id="failure-miscalibration-ex"
+  prompt="Define thresholds for abstain vs auto-approve. Include risk weighting."
+  rubric="Tie risk to confidence." 
+/>
+
+<ArtifactBlock
+  id="failure-miscalibration-artifact"
+  kind="policy"
+  description="Calibration policy block."
+  starter={`calibration:\n  abstain_if: "confidence<0.3 || (risk>0.5 && confidence<0.6)"\n  escalate_to: "human-review"\n  metrics:\n    ece: 0.05\n    coverage: 0.8\n`}
+/>
+
+### Failure mode focus
+- Confidently wrong outputs. Mitigate with calibration tests + abstain.
+- Ignored disagreement. Mitigate with ensemble checks.
+
+### References
+- Calibration techniques
+

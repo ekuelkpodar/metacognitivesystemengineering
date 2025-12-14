@@ -1,0 +1,65 @@
+---
+id: metrics-regression
+title: "Regression Prevention & Canaries"
+module: metrics
+level: Intermediate
+summary: "Use regression suites, canaries, and shadowing to prevent meta-cog regressions."
+prerequisites: [metrics-offline-eval]
+tags: [regression]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Design regression suites"
+  - "Plan canary + shadow deploys"
+  - "Define rollback triggers"
+glossaryTerms: [canary, shadow]
+references: ["release engineering"]
+---
+
+## Concept explanation
+Regression suites must include safety, calibration, and tool misuse tests. Canary releases limit blast radius; shadow runs compare new vs old without user impact.
+
+<MermaidBlock chart={`sequenceDiagram
+  participant Old
+  participant New
+  participant Shadow
+  Old->>Users: Responses
+  New--)Shadow: Shadow Responses
+  New->>Canary: 5% Traffic
+  Canary-->>Metrics: Compare
+`} caption="Shadow + canary." />
+
+<QuizBlock
+  id="metrics-regression-quiz"
+  prompt="What triggers rollback?"
+  options=["Styling change", "Meta-metric breach (ECE, jailbreak)", "Mood", "Random"]
+  answer={1}
+  explanation="Rollback triggers tie to metric breaches, especially meta-metrics."
+/>
+
+<ExerciseBlock
+  id="metrics-regression-ex"
+  prompt="Define one regression test and one canary metric that must hold before rollout."
+  rubric="Include threshold + owner." 
+/>
+
+<ArtifactBlock
+  id="metrics-regression-artifact"
+  kind="evaluation"
+  description="Canary plan JSON."
+  starter={`{
+  "canary": {
+    "traffic": 0.05,
+    "duration_minutes": 30,
+    "rollback_if": ["ece>0.05","jailbreak_rate>0.01"]
+  }
+}
+`}
+/>
+
+### Failure mode focus
+- Canary without metrics. Fix with gates.
+- Regression suite stale. Fix with incident-driven updates.
+
+### References
+- Release engineering playbooks
+

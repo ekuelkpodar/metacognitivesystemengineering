@@ -1,0 +1,56 @@
+---
+id: control-escalation-patterns
+title: "Escalation Design"
+module: control-loops
+level: Intermediate
+summary: "Design escalation and fallback behaviors tied to signals."
+prerequisites: [control-confidence-calibration]
+tags: [escalation]
+estimatedTime: "15 min"
+learningObjectives:
+  - "Create escalation matrices"
+  - "Define fallback behaviors"
+  - "Map signals to actions"
+glossaryTerms: [escalation, fallback]
+references: ["incident playbooks"]
+---
+
+## Concept explanation
+Escalation matrices connect signals to human or automated handlers. Good escalations are time-bounded, reversible, and logged.
+
+<MermaidBlock chart={`stateDiagram-v2
+  [*]-->Nominal
+  Nominal-->Warn: signal>soft
+  Warn-->Escalate: signal>hard
+  Escalate-->Safe
+  Safe-->Nominal: resolved
+`} caption="Escalation states." />
+
+<QuizBlock
+  id="control-escalation-quiz"
+  prompt="What should every escalation include?"
+  options=["Blame", "Owner + SLA + fallback", "Nothing", "UI theme"]
+  answer={1}
+  explanation="Escalations need an owner, SLA, and fallback behavior."
+/>
+
+<ExerciseBlock
+  id="control-escalation-ex"
+  prompt="Draft an escalation matrix for two signals: drift and jailbreak attempts."
+  rubric="Include thresholds and who responds."
+/>
+
+<ArtifactBlock
+  id="control-escalation-artifact"
+  kind="policy"
+  description="Escalation matrix YAML."
+  starter={`escalation:\n  - signal: drift_psi\n    warn: 0.15\n    hard: 0.25\n    owner: oncall-ml\n    action: canary_rollback\n  - signal: jailbreak_rate\n    warn: 0.01\n    hard: 0.03\n    owner: safety-lead\n    action: block_tools\n`}
+/>
+
+### Failure mode focus
+- Paging nobody. Fix with owner + SLA.
+- Infinite escalation loops. Fix with safe-state fallback.
+
+### References
+- Pager playbooks
+

@@ -1,0 +1,62 @@
+---
+id: control-drift-modeling
+title: "Drift, Volatility, and Environment Modeling"
+module: control-loops
+level: Intermediate
+summary: "Instrument drift detection and volatility modeling to keep loops stable."
+prerequisites: [control-feedback-vs-feedforward]
+tags: [drift, volatility]
+estimatedTime: "18 min"
+learningObjectives:
+  - "Select drift metrics"
+  - "Model volatility and shock handling"
+  - "Tie drift to policy changes"
+glossaryTerms: [drift, PSI]
+references: ["drift detection"]
+---
+
+## Concept explanation
+MCSE needs drift monitors on inputs, tools, and outcomes. Volatility models decide how aggressive control policies should be.
+
+<MermaidBlock chart={`graph LR
+  Data-->PSI[PSI/KL]
+  PSI-->Alert
+  Env-->Vol[Volatility Estimator]
+  Vol-->Policy
+  Alert-->Policy
+`} caption="Drift + volatility inform policy." />
+
+<QuizBlock
+  id="control-drift-quiz"
+  prompt="What should happen when PSI > 0.2?"
+  options=["Ignore", "Alert and consider canary rollback", "Always deploy", "Change colors"]
+  answer={1}
+  explanation="PSI >0.2 should trigger alert and potentially rollback or tighter policies."
+/>
+
+<ExerciseBlock
+  id="control-drift-ex"
+  prompt="Choose one drift metric and define actions for soft vs hard thresholds."
+  rubric="Include alert + adaptation."
+/>
+
+<ArtifactBlock
+  id="control-drift-artifact"
+  kind="evaluation"
+  description="Drift monitoring plan JSON."
+  starter={`{
+  "metric": "psi",
+  "soft": 0.15,
+  "hard": 0.25,
+  "actions": ["alert", "rollback_canary"]
+}
+`}
+/>
+
+### Failure mode focus
+- Drift ignored until failures. Fix with alerts + canary.
+- Overreact to noise. Fix with hysteresis and smoothing.
+
+### References
+- Drift detection patterns
+

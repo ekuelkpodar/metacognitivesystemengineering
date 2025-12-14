@@ -1,0 +1,69 @@
+---
+id: architecture-reference
+title: "Reference Architecture"
+module: architecture
+level: Intermediate
+summary: "Lay out MCSE components and responsibilities."
+prerequisites: [foundations-stack-model]
+tags: [architecture]
+estimatedTime: "30 min"
+learningObjectives:
+  - "Identify core components"
+  - "Place safety and meta-cognitive modules"
+  - "Map runtime concerns"
+glossaryTerms: [planner, meta-monitor, safety engine]
+references: ["MCSE blueprint"]
+---
+
+<Callout type="info" title="Concept">
+An MCSE architecture makes control points explicit: perception, representation, planner/policy, executor/tools, safety engine, calibration, meta-monitor/critic, memory manager, observability, and postmortem engine.
+</Callout>
+
+<MermaidBlock chart={`graph TB
+  P[Perception]-->R[Representation]
+  R-->PL[Planner]
+  PL-->EX[Executor]
+  EX-->Env
+  R-->Mem[Memory]
+  subgraph Meta
+    MM[Meta-Monitor]-->MC[Meta-Critic]
+    MC-->Cal[Calibration]
+    Cal-->PL
+    SAF[Safety Engine]-->EX
+    OBS[Observability]-->PM[Postmortem]
+  end
+`} caption="Reference MCSE architecture." />
+
+- Safety gates sit before execution and before tool calls.
+- Meta-monitor watches telemetry; critic evaluates plans vs policy; calibration adjusts confidence.
+- Observability emits structured events; postmortem engine updates policies/tests.
+
+<QuizBlock
+  id="architecture-reference-quiz"
+  prompt="Where should safety gating happen?"
+  options=["After action", "Before tools and high-risk actions", "Never", "Only in UI"]
+  answer={1}
+  explanation="Safety gating should intercept before tools/high-risk actions."
+/>
+
+<ExerciseBlock
+  id="architecture-reference-ex"
+  prompt="Draw your current architecture and mark where meta-monitor and safety engines attach."
+  rubric="Include telemetry events at each hop."
+/>
+
+<ArtifactBlock
+  id="architecture-reference-artifact"
+  kind="requirements"
+  description="Outline responsibilities per component."
+  starter={`## Components\n- Perception: normalize + scrub PII\n- Representation: state + uncertainty\n- Planner: select plan respecting constraints\n- Executor: tools with budgets\n- Meta-monitor: watch signals\n- Safety engine: block unsafe\n- Memory: provenance + TTL\n- Observability: structured events\n- Postmortem: incident ingestion\n`}
+/>
+
+### Failure mode focus
+- Missing intercepts -> unsafe tool use. Fix with pre-execution safety.
+- Unclear ownership -> no one fixes incidents. Assign owners per component.
+
+### References
+- MCSE blueprint
+- Observability guides
+

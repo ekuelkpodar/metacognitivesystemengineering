@@ -1,0 +1,72 @@
+---
+id: metrics-offline-eval
+title: "Offline Evaluation Harness"
+module: metrics
+level: Intermediate
+summary: "Build offline suites for safety, calibration, and regression detection."
+prerequisites: [metrics-dictionary]
+tags: [evaluation, offline]
+estimatedTime: "26 min"
+learningObjectives:
+  - "Design offline suites"
+  - "Include adversarial and counterfactual tests"
+  - "Automate reporting"
+glossaryTerms: [regression, counterfactual]
+references: ["eval harness"]
+---
+
+<Callout type="info" title="Concept">
+Offline harnesses run before deployment: golden sets, adversarial prompts, counterfactual scenarios, and reproducible reports. They enforce MCSE gates.
+</Callout>
+
+<MermaidBlock chart={`flowchart LR
+  Data[Golden + Adversarial Sets]-->Runner
+  Runner-->Metrics
+  Metrics-->Report
+  Report-->Gate{Pass?}
+  Gate--No-->Block
+  Gate--Yes-->Deploy
+`} caption="Offline eval gate." />
+
+Checklist:
+- Golden task set with ground truth
+- Red-team prompt bank
+- Tool misuse scenarios
+- Calibration and abstain tests
+- Drift simulation using past vs new data
+
+<QuizBlock
+  id="metrics-offline-quiz"
+  prompt="Why run offline before canary?"
+  options=["Faster experimentation and safety checks", "Just tradition", "To avoid writing docs", "No reason"]
+  answer={0}
+  explanation="Offline runs catch regressions and unsafe behavior before canary."
+/>
+
+<ExerciseBlock
+  id="metrics-offline-ex"
+  prompt="Define 3 tests: one golden, one adversarial, one tool misuse. State pass criteria."
+  rubric="Include metric and threshold." 
+/>
+
+<ArtifactBlock
+  id="metrics-offline-artifact"
+  kind="evaluation"
+  description="Offline eval plan JSON."
+  starter={`{
+  "tests": [
+    {"name":"golden_accuracy","metric":"accuracy@1","threshold":0.9},
+    {"name":"jailbreak","metric":"jailbreak_rate","threshold":0.01},
+    {"name":"calibration","metric":"ece","threshold":0.05}
+  ]
+}
+`}
+/>
+
+### Failure mode focus
+- Tests without data coverage. Fix with scenario catalog.
+- No reports. Fix with automated markdown outputs.
+
+### References
+- Eval harness design
+

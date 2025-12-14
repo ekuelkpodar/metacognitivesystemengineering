@@ -1,0 +1,56 @@
+---
+id: failure-memory-corruption
+title: "Memory Corruption and Hallucinated Writes"
+module: failure-safety
+level: Intermediate
+summary: "Protect memory from bad writes and tampering."
+prerequisites: [architecture-memory-systems]
+tags: [memory, failure]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Detect corrupted writes"
+  - "Design guard policies"
+  - "Test rollback"
+glossaryTerms: [provenance, quorum]
+references: ["memory safety"]
+---
+
+## Concept explanation
+Memory corruption happens when low-confidence or adversarial content is stored. MCSE uses provenance, hashing, quorum writes, and rollback snapshots.
+
+<MermaidBlock chart={`graph LR
+  Write-->Check[Confidence + Provenance]
+  Check-->Allow
+  Check-->Block
+  Allow-->Snapshot
+  Snapshot-->Restore
+`} caption="Memory write gating." />
+
+<QuizBlock
+  id="failure-memory-quiz"
+  prompt="What reduces hallucinated writes?"
+  options=["Write everything", "Confidence + provenance thresholds", "Disable hashing", "Trust"]
+  answer={1}
+  explanation="Require confidence/provenance and hashing to reduce hallucinated writes." 
+/>
+
+<ExerciseBlock
+  id="failure-memory-ex"
+  prompt="Define a write quorum policy for external tools."
+  rubric="Include hash + rollback." 
+/>
+
+<ArtifactBlock
+  id="failure-memory-artifact"
+  kind="policy"
+  description="Memory guard policy."
+  starter={`memory_guard:\n  min_confidence: 0.6\n  require_provenance: true\n  hash: sha256\n  quorum: 2\n  snapshot_interval: "1h"\n`}
+/>
+
+### Failure mode focus
+- Corruption undetected. Fix with periodic audits.
+- No rollback. Fix with snapshots.
+
+### References
+- Data integrity guides
+

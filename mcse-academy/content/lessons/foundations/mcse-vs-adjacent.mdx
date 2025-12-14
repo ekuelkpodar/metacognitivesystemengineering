@@ -1,0 +1,65 @@
+---
+id: foundations-mcse-vs-adjacent
+title: "MCSE vs Adjacent Fields"
+module: foundations
+level: Beginner
+summary: "Contrast MCSE with CSE, HFE, control theory, systems thinking, and LLMOps."
+prerequisites: [foundations-what-is-mcse]
+tags: [contrast, boundaries]
+estimatedTime: "30 min"
+learningObjectives:
+  - "Differentiate MCSE from related practices"
+  - "Identify when to apply MCSE over other frameworks"
+  - "Map deliverables unique to MCSE"
+glossaryTerms: [CSE, HFE, control theory, MLOps]
+references: ["CSE handbooks", "LLMOps guide"]
+---
+
+<Callout type="info" title="Concept">
+MCSE inherits from multiple fields but adds *meta-cognitive* obligations: explicit self-monitoring, policy-as-code, and governance loops that regulate how cognition runs and adapts.
+</Callout>
+
+## Comparison table (plain text)
+- **CSE**: optimizes human performance in complex systems. MCSE: adds self-observation and safety gates for AI+human cognition.
+- **HFE**: UX and ergonomics. MCSE: telemetry + governance for cognition, not just usability.
+- **Control theory**: stability. MCSE: applies control to *thinking loops* plus semantics, values, and ethics.
+- **LLMOps**: deploy LLMs. MCSE: wraps LLMs with calibration, memory policies, safety policies, and incident learning.
+
+<MermaidBlock chart={`graph LR
+  CSE-->MCSE
+  HFE-->MCSE
+  Control-->MCSE
+  LLMOps-->MCSE
+  MCSE-->Artifacts[Policies/Telemetry/ADR]
+`} caption="MCSE composes adjacent practices but mandates artifacts." />
+
+<QuizBlock
+  id="foundations-mcse-quiz"
+  prompt="What artifact is uniquely emphasized by MCSE?"
+  options=["UI mockups", "Incident-free uptime", "Policy-as-code + meta-cog telemetry", "GPU scheduling"]
+  answer={2}
+  explanation="MCSE requires policy-as-code, telemetry, and governance for cognition; uptime or UI alone are insufficient."
+/>
+
+<ExerciseBlock
+  id="foundations-mcse-exercise"
+  prompt="Pick one adjacent field you already use. Add two MCSE-specific deliverables that would harden your system."
+  rubric="Tie deliverables to meta-cognitive loops (monitor, critique, calibrate, govern)."
+/>
+
+<ArtifactBlock
+  id="foundations-mcse-artifact"
+  kind="adr"
+  description="Draft an ADR capturing why MCSE is needed over plain LLMOps."
+  starter={`# ADR: Adopt MCSE over LLMOps\n## Context\n- System: \n- Risks: hallucination, miscalibration, tool overreach\n## Decision\n- Add meta-monitor + meta-critic + calibration + safety policy engine\n## Consequences\n- More upfront design, clearer governance, safer rollout\n## Signals\n- ECE <0.05, self-detect rate >70%, jail-break rate <1%\n`}
+/>
+
+### Failure mode focus
+- **Metric soup**: tracking accuracy only. Fix with meta-metrics (ECE, self-detect rate, recovery time).
+- **Blind autonomy**: no escalation path. Fix with abstain + human-in-loop.
+
+### References
+- CSE Handbook (tasks and workload)
+- Control theory notes on stability + drift
+- LLMOps deployment guides (contrast surface)
+

@@ -1,0 +1,61 @@
+---
+id: control-meta-control-policies
+title: "Meta-Control Policies"
+module: control-loops
+level: Intermediate
+summary: "Specify policies that govern how the system adapts itself."
+prerequisites: [control-confidence-calibration]
+tags: [policies, adaptation]
+estimatedTime: "17 min"
+learningObjectives:
+  - "Write policy-as-code for adaptation"
+  - "Set budgets for self-change"
+  - "Tie updates to evidence"
+glossaryTerms: [policy-as-code, budget]
+references: ["ADR samples"]
+---
+
+## Concept explanation
+Meta-control policies bound self-modification: how often models/policies change, what evidence is required, and who approves.
+
+<MermaidBlock chart={`sequenceDiagram
+  participant Monitor
+  participant Critic
+  participant Policy
+  participant Approver
+  Monitor->>Critic: anomaly
+  Critic->>Policy: propose update
+  Policy-->>Approver: request
+  Approver-->>Policy: approve/deny
+  Policy-->>Monitor: new version
+`} caption="Meta-control approval flow." />
+
+<QuizBlock
+  id="control-meta-quiz"
+  prompt="What prevents runaway self-modification?"
+  options=["No tests", "Change budgets + approvals", "Unlimited updates", "Ignoring telemetry"]
+  answer={1}
+  explanation="Budgets and approvals tied to tests prevent runaway changes."
+/>
+
+<ExerciseBlock
+  id="control-meta-ex"
+  prompt="Define a weekly change budget and the tests required before policy changes."
+  rubric="Include who approves and rollback steps."
+/>
+
+<ArtifactBlock
+  id="control-meta-artifact"
+  kind="policy"
+  description="Meta-control guardrails."
+  starter={`meta_control:\n  change_budget_per_week: 3\n  required_tests: ["safety_regression", "calibration_suite"]\n  approvals: ["safety-lead"]\n  rollback: "canary_rollback"
+`}
+/>
+
+### Failure mode focus
+- Runaway self-mods. Fix with budgets + approvals.
+- Stale policies. Fix with scheduled review tied to incidents.
+
+### References
+- Policy-as-code examples
+

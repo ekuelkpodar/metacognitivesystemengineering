@@ -1,0 +1,7 @@
+{
+  "id": "architecture",
+  "title": "Architecture",
+  "description": "Reference components, interfaces, and runtime concerns.",
+  "order": 3,
+  "level": "Intermediate"
+}

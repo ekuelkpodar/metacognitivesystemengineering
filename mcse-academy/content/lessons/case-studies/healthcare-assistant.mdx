@@ -1,0 +1,70 @@
+---
+id: case-healthcare
+title: "Case Study: Healthcare Records Assistant"
+module: case-studies
+level: Intermediate
+summary: "Privacy-first assistant drafting summaries with strict safety gates."
+prerequisites: [failure-reward-hacking]
+tags: [case study, healthcare]
+estimatedTime: "26 min"
+learningObjectives:
+  - "Model privacy constraints"
+  - "Design calibration for clinical risk"
+  - "Define evaluation harness"
+glossaryTerms: [PHI, privacy]
+references: ["hipaa checklists"]
+---
+
+<Callout type="warn" title="Context">
+Domain: healthcare documentation. Risks: PHI leakage, incorrect guidance, audit requirements. Goals: accurate summaries, zero PHI exfil, clinician control.
+</Callout>
+
+<MermaidBlock chart={`graph TD
+  Note-->Scrub[PHI Scrubber]
+  Scrub-->Rep[Structured Representation]
+  Rep-->Plan[Planner]
+  Plan-->Safety[Safety Engine]
+  Safety-->Exec[Executor]
+  Exec-->Clinician
+  subgraph Meta
+    Monitor-->Critic
+    Critic-->Calibrate
+    Calibrate-->Plan
+    Postmortem-->Plan
+  end
+`} caption="Healthcare MCSE stack." />
+
+Safety + governance:
+- PHI scrubber + allowlisted outputs
+- Safety engine with clinical rule base
+- Meta-monitor on uncertainty; escalate to clinician when confidence<0.7 or risk>0.3
+- Immutable audit logs for compliance
+
+<QuizBlock
+  id="case-health-quiz"
+  prompt="What is mandatory before action?"
+  options=["Nothing", "Safety + PHI checks", "UI theme", "Random"]
+  answer={1}
+  explanation="Safety + PHI checks are required before any output or tool call." 
+/>
+
+<ExerciseBlock
+  id="case-health-ex"
+  prompt="Define two PHI rules and an escalation path to clinician."
+  rubric="Include thresholds." 
+/>
+
+<ArtifactBlock
+  id="case-health-artifact"
+  kind="policy"
+  description="Healthcare safety policy."
+  starter={`policies:\n  - name: block_phi\n    condition: "phi_detected==true"\n    action: "block"\n  - name: clinician_review\n    condition: "confidence<0.7 || risk>0.3"\n    action: "escalate_to_clinician"\n`}
+/>
+
+### Failure mode focus
+- PHI leak. Mitigate with scrubbers + allowlist.
+- Wrong advice. Mitigate with calibration + mandatory clinician approval.
+
+### References
+- HIPAA-style checklists
+

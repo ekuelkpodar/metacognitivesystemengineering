@@ -1,0 +1,55 @@
+---
+id: case-trading
+title: "Case Study: Trading Assistant"
+module: case-studies
+level: Intermediate
+summary: "Risk-constrained agent for trading recommendations."
+prerequisites: [control-meta-control-policies]
+tags: [case study, finance]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Bound risk"
+  - "Design abstain behavior"
+  - "Evaluate under stress"
+glossaryTerms: [risk budget, VaR]
+references: ["risk policy"]
+---
+
+## Concept explanation
+Trading assistants must respect risk budgets and compliance. MCSE enforces tool limits, confidence thresholds, and audit logs.
+
+<MermaidBlock chart={`graph LR
+  Market-->Rep[Representation]
+  Rep-->Planner
+  Planner-->Safety
+  Safety-->Exec[Orders?]
+`} caption="Trading MCSE." />
+
+<QuizBlock
+  id="case-trading-quiz"
+  prompt="When to abstain?"
+  options=["Never", "When confidence low or risk budget exceeded", "Always", "Random"]
+  answer={1}
+  explanation="Abstain when confidence is low or risk budget is exceeded." 
+/>
+
+<ExerciseBlock
+  id="case-trading-ex"
+  prompt="Set a risk budget and an abstain rule for volatile markets."
+  rubric="Include metric." 
+/>
+
+<ArtifactBlock
+  id="case-trading-artifact"
+  kind="policy"
+  description="Risk policy YAML."
+  starter={`risk_policy:\n  daily_var_limit: 0.02\n  abstain_if: "volatility>0.6 || confidence<0.6"\n  approvals: ["risk-officer"]\n`}
+/>
+
+### Failure mode focus
+- Over-trading. Fix with budgets.
+- Non-compliant logs. Fix with immutable audit trail.
+
+### References
+- Risk policies
+

@@ -1,0 +1,54 @@
+---
+id: requirements-policy-as-code
+title: "Policy-as-Code"
+module: requirements
+level: Intermediate
+summary: "Capture safety, escalation, and adaptation rules as code."
+prerequisites: [requirements-meta]
+tags: [policy]
+estimatedTime: "18 min"
+learningObjectives:
+  - "Author policy files"
+  - "Version and test policies"
+  - "Connect policies to enforcement"
+glossaryTerms: [policy-as-code]
+references: ["OPA style"]
+---
+
+## Concept explanation
+Policies should be versioned, testable, and enforced in runtime. Include conditions, actions, and owners.
+
+<MermaidBlock chart={`graph LR
+  PolicyFile-->Gate[Safety Gate]
+  Gate-->Decision
+  Tests-->PolicyFile
+`} caption="Policy-as-code lifecycle." />
+
+<QuizBlock
+  id="requirements-policy-quiz"
+  prompt="What makes a policy enforceable?"
+  options=["Plain text", "Structured rules with actions and tests", "Rumors", "Slides"]
+  answer={1}
+  explanation="Structured, testable rules make policies enforceable."
+/>
+
+<ExerciseBlock
+  id="requirements-policy-ex"
+  prompt="Write one allow rule and one deny rule for tool usage with thresholds."
+  rubric="Include risk and confidence."
+/>
+
+<ArtifactBlock
+  id="requirements-policy-artifact"
+  kind="policy"
+  description="Policy YAML."
+  starter={`policies:\n  - name: safe_tool_use\n    condition: "tool in ['search','calc'] && risk<0.3"\n    action: allow\n  - name: block_exec\n    condition: "tool == 'shell' && confidence<0.8"\n    action: escalate\n`}
+/>
+
+### Failure mode focus
+- Policies untested. Fix with unit tests.
+- Drift. Fix with policy versioning and linting.
+
+### References
+- OPA/rego patterns
+

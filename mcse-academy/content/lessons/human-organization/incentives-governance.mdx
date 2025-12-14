@@ -1,0 +1,55 @@
+---
+id: human-incentives
+title: "Incentives and Governance"
+module: human-organization
+level: Intermediate
+summary: "Align incentives, approvals, and compliance in MCSE."
+prerequisites: [human-hitl]
+tags: [governance]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Define governance gates"
+  - "Align incentives"
+  - "Ensure compliance"
+glossaryTerms: [governance, RACI]
+references: ["governance board"]
+---
+
+## Concept explanation
+Governance sets approvals, risk reviews, and compliance checks. Incentives ensure teams care about safety and learning, not just speed.
+
+<MermaidBlock chart={`graph LR
+  Policy-->Review[Governance Board]
+  Review-->Approve
+  Review-->Deny
+  Approve-->Deploy
+`} caption="Governance review." />
+
+<QuizBlock
+  id="human-governance-quiz"
+  prompt="Who should approve goal changes?"
+  options=["Anyone", "Named owners with compliance", "Nobody", "Intern"]
+  answer={1}
+  explanation="Named owners with compliance oversight should approve goal changes." 
+/>
+
+<ExerciseBlock
+  id="human-governance-ex"
+  prompt="Define a RACI for one risky change."
+  rubric="Include who approves and who is informed." 
+/>
+
+<ArtifactBlock
+  id="human-governance-artifact"
+  kind="requirements"
+  description="Governance charter." 
+  starter={`## Governance\n- Board: \n- Approves: goal changes, policy updates\n- Cadence: biweekly\n- Incentives: OKRs include safety + learning velocity\n`}
+/>
+
+### Failure mode focus
+- Incentives misaligned. Fix by adding safety KPIs.
+- Shadow changes. Fix with approvals and audit logs.
+
+### References
+- Governance templates
+

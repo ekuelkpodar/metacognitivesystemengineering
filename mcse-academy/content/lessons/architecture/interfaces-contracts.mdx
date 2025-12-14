@@ -1,0 +1,73 @@
+---
+id: architecture-interfaces-contracts
+title: "Interfaces & Contracts"
+module: architecture
+level: Intermediate
+summary: "Define APIs and schemas between MCSE components."
+prerequisites: [architecture-reference]
+tags: [interfaces, contracts]
+estimatedTime: "26 min"
+learningObjectives:
+  - "Specify schemas for key interfaces"
+  - "Add safety + provenance fields"
+  - "Make contracts testable"
+glossaryTerms: [contract, schema]
+references: ["api design"]
+---
+
+<Callout type="info" title="Concept">
+Interfaces must carry provenance, confidence, risk, and policy versioning. Contracts allow pre-deployment tests and drift detection.
+</Callout>
+
+<MermaidBlock chart={`sequenceDiagram
+  participant P as Perception
+  participant R as Representation
+  participant PL as Planner
+  participant S as Safety
+  participant EX as Executor
+  P->>R: Observation{timestamp, source, pii_mask}
+  R->>PL: State{facts, uncertainty, provenance}
+  PL->>S: PlanProposal{steps, risk_score}
+  S-->>PL: Decision{allow|revise|block}
+  PL->>EX: Action{tool, params, confidence}
+`} caption="Contracts across the MCSE pipeline." />
+
+<QuizBlock
+  id="architecture-interfaces-quiz"
+  prompt="What fields must appear in cross-module messages?"
+  options=["Only payload", "Provenance, confidence, risk, policyVersion", "UI labels", "Nothing"]
+  answer={1}
+  explanation="MCSE contracts include provenance, confidence, risk, and policy version to enable monitoring and audit."
+/>
+
+<ExerciseBlock
+  id="architecture-interfaces-ex"
+  prompt="Design one schema that flows from planner to safety and one from executor to observability."
+  rubric="Include id, timestamp, confidence, risk, policyVersion." 
+/>
+
+<ArtifactBlock
+  id="architecture-interfaces-artifact"
+  kind="telemetry"
+  description="Action event schema JSON."
+  starter={`{
+  "event": "action_executed",
+  "id": "uuid",
+  "timestamp": "",
+  "tool": "",
+  "confidence": 0.0,
+  "risk": 0.0,
+  "policyVersion": "v1",
+  "provenance": []
+}
+`}
+/>
+
+### Failure mode focus
+- Missing provenance -> cannot debug. Add hashes + source ids.
+- Silent schema drift. Add contract tests and schema versioning.
+
+### References
+- JSON schema best practices
+- Telemetry spec examples
+

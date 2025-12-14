@@ -1,0 +1,65 @@
+---
+id: control-confidence-calibration
+title: "Confidence and Calibration"
+module: control-loops
+level: Intermediate
+summary: "Engineer confidence estimates, thresholds, and calibration routines for meta-control."
+prerequisites: [foundations-stack-model]
+tags: [calibration, confidence]
+estimatedTime: "30 min"
+learningObjectives:
+  - "Define calibration metrics"
+  - "Implement selective prediction and abstain"
+  - "Set thresholds tied to risk"
+glossaryTerms: [ECE, calibration, abstain]
+references: ["selective prediction"]
+---
+
+<Callout type="info" title="Concept">
+Confidence without calibration is dangerous. MCSE treats calibration error, abstain thresholds, and escalation rules as first-class requirements with tests.
+</Callout>
+
+<MermaidBlock chart={`flowchart LR
+  Obs-->Plan
+  Plan-->Confidence
+  Confidence-->Decision{Conf >= thresh?}
+  Decision-- yes -->Act
+  Decision-- no -->Escalate[Escalate/Abstain]
+  Act-->Outcome
+  Outcome-->Calibrate[Calibrate Model]
+  Calibrate-->Plan
+`} caption="Selective prediction with calibration feedback." />
+
+- Metrics: Expected Calibration Error (ECE), over/under-confidence ratio, abstain rate.
+- Policies: dynamic thresholds by risk class; cap actions when confidence drops.
+- Calibration routines: temperature scaling, isotonic regression, Platt scaling for classifiers; monitor drift.
+
+<QuizBlock
+  id="control-calibration-quiz"
+  prompt="Which combo is safest for high-risk tools?"
+  options=["Low threshold + no escalation", "High threshold + abstain", "Ignore confidence", "Randomize"]
+  answer={1}
+  explanation="High threshold + abstain keeps risky actions safe when confidence is low."
+/>
+
+<ExerciseBlock
+  id="control-calibration-ex"
+  prompt="Set two thresholds: one for low-risk answers, one for high-risk tools. Define what happens below each."
+  rubric="Include action (abstain/escalate) and metric owner."
+/>
+
+<ArtifactBlock
+  id="control-calibration-artifact"
+  kind="policy"
+  description="Write a calibration policy block."
+  starter={`calibration:\n  thresholds:\n    low_risk: 0.4\n    high_risk: 0.7\n  actions:\n    - condition: "confidence < high_risk && tool_risk > 0.5"\n      action: "escalate"\n    - condition: "confidence < low_risk"\n      action: "abstain"\nmetrics:\n  ece_target: 0.05\n  self_detect_rate: 0.7\n`}
+/>
+
+### Failure mode focus
+- Confidently wrong: calibrate and cap risk; add self-check prompts.
+- Over-abstain: tune thresholds per risk; add better representation features.
+
+### References
+- Selective prediction papers
+- Reliability diagrams
+

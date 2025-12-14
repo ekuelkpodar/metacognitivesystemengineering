@@ -1,0 +1,72 @@
+---
+id: foundations-what-is-mcse
+title: "What MCSE Is"
+module: foundations
+level: Beginner
+summary: "Define Meta-Cognitive Systems Engineering and its boundaries."
+prerequisites: []
+tags: [definition, boundaries, scope]
+estimatedTime: "25 min"
+learningObjectives:
+  - "State the MCSE definition and why it exists"
+  - "Differentiate MCSE from adjacent disciplines"
+  - "List core capabilities of meta-cognitive systems"
+glossaryTerms: [MCSE, meta-monitor, meta-critic, calibration]
+references: ["MCSE definition doc", "CSE primer"]
+---
+
+<Callout type="info" title="Concept">
+Meta-Cognitive Systems Engineering makes the *monitoring, critique, calibration, and governance* of cognition first-class requirements. You are engineering systems that know how they think, measure how well that thinking works, and change safely when reality shifts.
+</Callout>
+
+## Why MCSE exists
+
+- Cognition alone is fragile under shift and adversaries; meta-cognition adds self-observation and safe adaptation.
+- It forces explicit goals, constraints, telemetry, and postmortems into the architecture—not bolted on later.
+
+<MermaidBlock chart={`graph TD
+  Input-->C[Reason/Plan]
+  C-->A[Action]
+  A-->O[Outcome]
+  O-->M[Meta-Monitor]
+  M-->K[Meta-Critic]
+  K-->Cal[Calibrate]
+  Cal-->C
+  M-->G[Governance]
+  G-->A
+`} caption="MCSE loop wraps the cognitive loop." />
+
+## Boundaries
+- MCSE is *not* just analytics. It defines control points that can stop, adapt, or escalate decisions.
+- MCSE is *not* generic systems thinking. It is architecture + metrics + governance targeted at cognition and meta-cognition.
+
+<QuizBlock
+  id="foundations-what-is-quiz"
+  prompt="What makes MCSE distinct from classic MLOps?"
+  options=["Stronger CI/CD", "Focus on model accuracy", "First-class meta-cognitive loops with safety gates", "Only about UX"]
+  answer={2}
+  explanation="MCSE elevates monitoring/critique/calibration/governance of cognition and includes safety + adaptation loops as requirements."
+/>
+
+<ExerciseBlock
+  id="foundations-what-is-exercise"
+  prompt="Write a one-sentence MCSE charter for your project and list two meta-cognitive signals you will monitor."
+  rubric="Include intent + signals + safety angle."
+/>
+
+<ArtifactBlock
+  id="foundations-what-is-artifact"
+  kind="requirements"
+  description="Draft a minimal MCSE requirements skeleton."
+  starter={`## MCSE Charter\n- Mission: \n- Success: \n- Boundaries: \n- Stakeholders: \n\n## Meta-Cognitive Signals\n- Confidence calibration: target ECE <= 0.05\n- Drift: PSI alert > 0.2\n\n## Safety Gates\n- Escalate when confidence < 0.3 or risk > 0.2\n\n## Telemetry\n- Events: plan_proposed, action_executed, safety_blocked\n- Fields: timestamp, policyVersion, confidence, risk, tool\n`}
+/>
+
+### Failure mode focus
+- Miscalibration: overconfident plans with low evidence.
+- Missing governance: no escalation path -> silent failure.
+- Mitigate with abstain thresholds, dual safety (rules + model), and postmortems.
+
+### References
+- MCSE definition doc
+- Control theory for feedback + stability
+

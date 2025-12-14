@@ -1,0 +1,55 @@
+---
+id: requirements-adr
+title: "ADRs for MCSE Decisions"
+module: requirements
+level: Intermediate
+summary: "Document architecture and policy decisions with meta-cog impact."
+prerequisites: [requirements-meta]
+tags: [adr]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Structure MCSE-specific ADRs"
+  - "Capture meta impacts and signals"
+  - "Link ADRs to tests"
+glossaryTerms: [ADR]
+references: ["adr template"]
+---
+
+## Concept explanation
+ADRs in MCSE track meta-cognitive impact: signals affected, safety implications, experiments planned, and rollback strategy.
+
+<MermaidBlock chart={`graph LR
+  Decision-->Signals
+  Decision-->Policies
+  Decision-->Tests
+  Decision-->Rollback
+`} caption="ADR connects decision to safeguards." />
+
+<QuizBlock
+  id="requirements-adr-quiz"
+  prompt="What extra fields should MCSE ADRs include?"
+  options=["Color scheme", "Meta-cog signals + safety impact", "CEO quote", "None"]
+  answer={1}
+  explanation="MCSE ADRs note signals, safety impact, and experiments."
+/>
+
+<ExerciseBlock
+  id="requirements-adr-ex"
+  prompt="Draft an ADR for adding a meta-critic. Include signals and tests."
+  rubric="Add consequences and rollback." 
+/>
+
+<ArtifactBlock
+  id="requirements-adr-artifact"
+  kind="adr"
+  description="ADR markdown starter."
+  starter={`# ADR: Add meta-critic\n## Context\n- Issue: \n## Decision\n- Add meta-critic component before planner\n## Meta-Cog Impact\n- Signals: plan_quality, risk_score\n## Safety Impact\n- Blocks unsafe plans earlier\n## Tests\n- safety_regression, calibration_suite\n## Rollback\n- Disable feature flag\n`}
+/>
+
+### Failure mode focus
+- Decisions without safety review. Fix with ADR template.
+- No rollback. Fix with explicit plan.
+
+### References
+- ADR cookbook
+

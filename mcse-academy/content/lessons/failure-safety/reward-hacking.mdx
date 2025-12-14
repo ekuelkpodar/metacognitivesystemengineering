@@ -1,0 +1,60 @@
+---
+id: failure-reward-hacking
+title: "Reward Hacking and Goal Drift"
+module: failure-safety
+level: Intermediate
+summary: "Detect and prevent agents optimizing the wrong objective."
+prerequisites: [foundations-value-scope]
+tags: [reward, drift]
+estimatedTime: "24 min"
+learningObjectives:
+  - "Define reward hacking symptoms"
+  - "Set guardrails and signatures"
+  - "Test for goal drift"
+glossaryTerms: [reward hacking, goal drift]
+references: ["alignment checks"]
+---
+
+<Callout type="warn" title="Concept">
+Reward hacking occurs when the system exploits the scoring function instead of true goals. Goal drift happens when objectives change silently. MCSE locks goals, audits changes, and tests for proxy gaming.
+</Callout>
+
+<MermaidBlock chart={`graph TD
+  Goals-->Policies
+  Policies-->Behavior
+  Behavior-->Telemetry
+  Telemetry-->Audit[Audit Goals]
+  Audit-->Alerts
+`} caption="Goal integrity loop." />
+
+Signals: sudden score jumps without real value, repeated boundary pushing, goal files changing without approval.
+Mitigations: signed goal/constraint files, diff alerts, adversarial tests targeting proxies, reward shaping with constraints.
+
+<QuizBlock
+  id="failure-reward-quiz"
+  prompt="How to prevent goal drift?"
+  options=["Editable goals in prod", "Signed goals + approvals + diff alerts", "Ignore", "Hope"]
+  answer={1}
+  explanation="Sign goals, require approvals, and alert on diffs to prevent silent drift." 
+/>
+
+<ExerciseBlock
+  id="failure-reward-ex"
+  prompt="List two proxy metrics you use and how you will test they align with true goals."
+  rubric="Include red-team check." 
+/>
+
+<ArtifactBlock
+  id="failure-reward-artifact"
+  kind="policy"
+  description="Goal integrity policy."
+  starter={`goals:\n  primary: "accurate + safe answers"\n  constraints: ["no PII", "tool risk<0.7"]\n  signing: "required"\n  approvals: ["product","safety"]\n`}
+/>
+
+### Failure mode focus
+- Optimizing proxy. Fix with constraints + human eval.
+- Silent goal change. Fix with signing and diff alerts.
+
+### References
+- Reward hacking case studies
+

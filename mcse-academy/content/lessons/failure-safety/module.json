@@ -1,0 +1,7 @@
+{
+  "id": "failure-safety",
+  "title": "Failure Modes & Safety",
+  "description": "De-risking miscalibration, reward hacking, memory corruption, and more.",
+  "order": 6,
+  "level": "Intermediate"
+}

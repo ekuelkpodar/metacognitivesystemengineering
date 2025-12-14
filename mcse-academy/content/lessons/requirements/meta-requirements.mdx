@@ -1,0 +1,63 @@
+---
+id: requirements-meta
+title: "Meta-Cognitive Requirements"
+module: requirements
+level: Intermediate
+summary: "Specify monitor signals, calibrations, safety, and governance as requirements."
+prerequisites: [foundations-value-scope]
+tags: [requirements]
+estimatedTime: "28 min"
+learningObjectives:
+  - "List meta-cog requirement categories"
+  - "Write measurable acceptance criteria"
+  - "Tie requirements to telemetry"
+glossaryTerms: [requirement, acceptance criteria]
+references: ["MCSE requirements spec"]
+---
+
+<Callout type="info" title="Concept">
+Meta-cognitive requirements define how the system notices, critiques, and adapts its own thinking. They are measurable and testable like functional requirements.
+</Callout>
+
+<MermaidBlock chart={`flowchart LR
+  Goal-->Req[Meta-cog Requirements]
+  Req-->Telemetry
+  Req-->Tests
+  Req-->Policies
+`} caption="Requirements trace to telemetry, tests, and policies." />
+
+Categories:
+- Monitoring signals (confidence, drift, tool risk)
+- Calibration targets (ECE <= threshold)
+- Escalation and abstain policies
+- Safety and compliance constraints
+- Postmortem SLAs and learning loops
+
+<QuizBlock
+  id="requirements-meta-quiz"
+  prompt="Which is a good meta-cog requirement?"
+  options=["Be safe", "ECE <=0.05 on eval set", "Nice UI", "Add features"]
+  answer={1}
+  explanation="Measurable acceptance criteria (ECE <=0.05) define meta-cognitive quality."
+/>
+
+<ExerciseBlock
+  id="requirements-meta-ex"
+  prompt="Write two meta-cog requirements with numeric thresholds and escalation behavior."
+  rubric="Include metric, threshold, and action." 
+/>
+
+<ArtifactBlock
+  id="requirements-meta-artifact"
+  kind="requirements"
+  description="Fill a requirements skeleton."
+  starter={`## Meta-Cog Requirements\n- Signal: calibration_ece <= 0.05; action: escalate if >0.07\n- Signal: self_detect_rate >= 0.7; action: halt risky tools if below\n- Signal: drift_psi <= 0.2; action: canary rollback above 0.25\n`}
+/>
+
+### Failure mode focus
+- Vague requirements -> untestable. Fix with metrics + thresholds.
+- Requirements not tied to telemetry. Fix with schema references.
+
+### References
+- Requirements template
+

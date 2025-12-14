@@ -1,0 +1,7 @@
+{
+  "id": "metrics",
+  "title": "Metrics & Evaluation",
+  "description": "Measurement, harnesses, and postmortems.",
+  "order": 5,
+  "level": "Intermediate"
+}

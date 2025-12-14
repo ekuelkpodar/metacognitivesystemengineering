@@ -1,0 +1,54 @@
+---
+id: human-decision-logs
+title: "Decision Logs and Accountability"
+module: human-organization
+level: Intermediate
+summary: "Track decisions, policies, and who changed what."
+prerequisites: [requirements-adr]
+tags: [audit]
+estimatedTime: "15 min"
+learningObjectives:
+  - "Log decisions"
+  - "Link to ADRs and policies"
+  - "Make audits easy"
+glossaryTerms: [audit log, accountability]
+references: ["decision logs"]
+---
+
+## Concept explanation
+Decision logs record what changed, why, who approved, and what tests ran. They connect to ADRs and audit trails.
+
+<MermaidBlock chart={`graph LR
+  ADR-->DecisionLog
+  Policy-->DecisionLog
+  DecisionLog-->Audit
+`} caption="Decision log links." />
+
+<QuizBlock
+  id="human-decision-quiz"
+  prompt="What fields go into a decision log?"
+  options=["None", "Who, what, why, tests, policy version", "Emoji", "IP"]
+  answer={1}
+  explanation="Decision logs need who/what/why/tests/policy version." 
+/>
+
+<ExerciseBlock
+  id="human-decision-ex"
+  prompt="Draft a decision entry for changing a safety threshold."
+  rubric="Include evidence and rollback." 
+/>
+
+<ArtifactBlock
+  id="human-decision-artifact"
+  kind="requirements"
+  description="Decision log markdown."
+  starter={`| When | Who | What | Why | Tests | Policy Version |\n| --- | --- | --- | --- | --- | --- |\n| 2024-01-01 | safety-lead | Raised confidence threshold | high false positives | safety_regression | v12 |\n`}
+/>
+
+### Failure mode focus
+- No records. Fix with required decision logs in CI.
+- Audits painful. Fix with structured logs.
+
+### References
+- Audit best practices
+

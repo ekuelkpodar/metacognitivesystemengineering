@@ -1,0 +1,70 @@
+---
+id: foundations-stack-model
+title: "The MCSE Stack"
+module: foundations
+level: Beginner
+summary: "Perception -> representation -> reasoning -> action with meta-layer and memory."
+prerequisites: [foundations-what-is-mcse]
+tags: [stack, architecture]
+estimatedTime: "18 min"
+learningObjectives:
+  - "Describe each layer of the MCSE stack"
+  - "Identify meta-layer roles"
+  - "Map memory types to use cases"
+glossaryTerms: [perception, memory manager]
+references: ["stack diagram"]
+---
+
+## Concept explanation
+The stack organizes cognition and meta-cognition: perception normalizes inputs, representation holds state + uncertainty, reasoning plans, action executes, and the meta-layer monitors, critiques, calibrates, and governs adaptation. Memory spans working, episodic, semantic, procedural, and external tools.
+
+<MermaidBlock chart={`graph TB
+  P[Perception]-->R[Representation]
+  R-->Plan[Reason/Plan]
+  Plan-->Act[Execute]
+  Act-->Env
+  R-->Mem[Memory]
+  subgraph Meta
+    Monitor-->Critic
+    Critic-->Calibrate
+    Calibrate-->Plan
+    Critic-->Safety
+  end
+`} caption="Stack with meta-layer hooks." />
+
+<QuizBlock
+  id="foundations-stack-quiz"
+  prompt="Where should uncertainty live?"
+  options=["Only in outputs", "Representation layer with calibration feeding planner", "In UI only", "Nowhere"]
+  answer={1}
+  explanation="Uncertainty belongs in state representation and feeds calibration + planning."
+/>
+
+<ExerciseBlock
+  id="foundations-stack-ex"
+  prompt="Map your system components to stack layers; note missing meta-layer hooks."
+  rubric="Identify at least one monitor + one safety intercept."
+/>
+
+<ArtifactBlock
+  id="foundations-stack-artifact"
+  kind="telemetry"
+  description="Draft telemetry schema for stack transitions."
+  starter={`{
+  "event": "stack_transition",
+  "layer": "representation",
+  "timestamp": "",
+  "confidence": 0.7,
+  "risk": 0.1,
+  "policyVersion": "v1"
+}
+`}
+/>
+
+### Failure mode focus
+- Missing meta-layer hooks -> no ability to critique actions.
+- Memory writes without provenance -> drift and corruption.
+
+### References
+- MCSE stack canonical diagram
+

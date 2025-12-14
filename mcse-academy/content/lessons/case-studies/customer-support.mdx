@@ -1,0 +1,72 @@
+---
+id: case-support
+title: "Case Study: Customer Support Agent"
+module: case-studies
+level: Intermediate
+summary: "Apply MCSE to a support agent with tools and PII constraints."
+prerequisites: [architecture-reference]
+tags: [case study]
+estimatedTime: "26 min"
+learningObjectives:
+  - "Decompose support tasks"
+  - "Design safety and calibration"
+  - "Define metrics and tests"
+glossaryTerms: [PII, escalation]
+references: ["support playbook"]
+---
+
+<Callout type="info" title="Context">
+Domain: enterprise support. Risks: PII leakage, tool misuse, hallucinated answers. Goals: accurate, fast, safe responses.
+</Callout>
+
+<MermaidBlock chart={`graph LR
+  User-->Perception[Perception/PII scrub]
+  Perception-->RAG[Representation/RAG]
+  RAG-->Planner
+  Planner-->Safety
+  Safety-->Exec[Executor]
+  Exec-->User
+  subgraph Meta
+    Monitor-->Critic
+    Critic-->Calibration
+    Calibration-->Planner
+    Post[Postmortem]-->Planner
+  end
+`} caption="Support agent MCSE." />
+
+Plan:
+- Safety: PII scrubbing, allowlisted tools, classifier + rules.
+- Calibration: selective prediction, abstain for unknown products.
+- Memory: semantic KB with provenance.
+- Metrics: accuracy@1, ECE, jailbreak rate, time-to-resolution.
+
+<QuizBlock
+  id="case-support-quiz"
+  prompt="What is the riskiest failure?"
+  options=["Slow response", "PII leak", "Friendly tone", "Dark mode"]
+  answer={1}
+  explanation="PII leak is highest risk; requires safety gates and audits." 
+/>
+
+<ExerciseBlock
+  id="case-support-ex"
+  prompt="Write two policies specific to PII and one escalation trigger."
+  rubric="Include detection + action." 
+/>
+
+<ArtifactBlock
+  id="case-support-artifact"
+  kind="policy"
+  description="Support safety policy."
+  starter={`policies:\n  - name: block_pii\n    condition: "pii_detected==true"\n    action: "block"\n  - name: tool_allowlist\n    condition: "tool in ['search','kb_lookup']"\n    action: "allow"\n  escalation:\n    - signal: "confidence<0.3"
+      action: "route_to_human"
+`}
+/>
+
+### Failure mode focus
+- PII exfiltration. Mitigate with scrubbing + block.
+- Miscalibration on novel issues. Mitigate with abstain + human.
+
+### References
+- Privacy guidelines
+

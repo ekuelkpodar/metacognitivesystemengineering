@@ -1,0 +1,63 @@
+---
+id: architecture-memory-systems
+title: "Memory Systems"
+module: architecture
+level: Intermediate
+summary: "Design episodic, semantic, procedural, and external memories with provenance."
+prerequisites: [architecture-reference]
+tags: [memory]
+estimatedTime: "22 min"
+learningObjectives:
+  - "Differentiate memory types"
+  - "Add provenance and write policies"
+  - "Design eviction and freshness"
+glossaryTerms: [episodic memory, semantic memory]
+references: ["memory manager"]
+---
+
+## Concept explanation
+Memory fuels reasoning and meta-cognition. MCSE requires provenance, TTLs, and calibration on writes to prevent hallucinated or corrupted memory.
+
+<MermaidBlock chart={`graph LR
+  Obs-->Working
+  Working-->Episodic
+  Working-->Semantic
+  Working-->Procedural
+  External[External Tools]-->Working
+  subgraph Policies
+    Provenance-->Writes
+    TTL-->Evict
+    Hashing-->Integrity
+  end
+  Writes-->Working
+`} caption="Memory flows with guard policies." />
+
+<QuizBlock
+  id="architecture-memory-quiz"
+  prompt="What prevents hallucinated writes?"
+  options=["Unlimited writes", "Provenance + confidence thresholds", "No logging", "Random purge"]
+  answer={1}
+  explanation="Require provenance and confidence thresholds for writes to avoid hallucinated or corrupt entries."
+/>
+
+<ExerciseBlock
+  id="architecture-memory-ex"
+  prompt="Define write policy for semantic memory and TTLs for episodic memory."
+  rubric="Include confidence threshold and hashing."
+/>
+
+<ArtifactBlock
+  id="architecture-memory-artifact"
+  kind="policy"
+  description="Memory write policy YAML."
+  starter={`memory_policy:\n  write_threshold: 0.6\n  provenance_required: true\n  hash_content: true\n  ttl:\n    episodic: "7d"\n    semantic: "30d"\n    procedural: "90d"\n`}
+/>
+
+### Failure mode focus
+- Corrupted memory -> wrong plans. Mitigate with hashes, quorum writes, and audits.
+- Memory bloat -> latency. Mitigate with TTL + summarization.
+
+### References
+- RAG safety notes
+- Provenance best practices
+

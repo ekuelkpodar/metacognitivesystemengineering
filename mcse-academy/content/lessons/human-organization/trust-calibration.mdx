@@ -1,0 +1,57 @@
+---
+id: human-trust-calibration
+title: "Trust Calibration and UX"
+module: human-organization
+level: Intermediate
+summary: "Design interfaces that reflect calibrated confidence and risk."
+prerequisites: [metrics-online-monitoring]
+tags: [trust, ux]
+estimatedTime: "22 min"
+learningObjectives:
+  - "Show confidence/uncertainty to users"
+  - "Avoid over-trust"
+  - "Design consent for risky actions"
+glossaryTerms: [trust calibration]
+references: ["confidence UI"]
+---
+
+<Callout type="info" title="Concept">
+UI communicates calibration. Show confidence, evidence, and alternatives. Require confirmation for risky actions. Avoid greenwashing that inflates trust.
+</Callout>
+
+<MermaidBlock chart={`graph LR
+  Confidence-->UI[UI Signals]
+  Risk-->UI
+  UI-->UserBehavior
+  Feedback-->Calibration
+  UserBehavior-->Feedback
+`} caption="UI influences trust loops." />
+
+<QuizBlock
+  id="human-trust-quiz"
+  prompt="What reduces over-trust?"
+  options=["Hide uncertainty", "Show confidence + evidence + fallback", "Always green checks", "Silence"]
+  answer={1}
+  explanation="Displaying confidence, evidence, and fallbacks calibrates trust." 
+/>
+
+<ExerciseBlock
+  id="human-trust-ex"
+  prompt="Design a UI snippet showing confidence bands and when escalation is needed."
+  rubric="Include language for abstain." 
+/>
+
+<ArtifactBlock
+  id="human-trust-artifact"
+  kind="requirements"
+  description="Trust UX checklist."
+  starter={`## Trust UX\n- Show confidence (0-1)\n- Provide evidence links\n- Indicate risk level\n- Offer escalate button\n- Log user feedback\n`}
+/>
+
+### Failure mode focus
+- Over-trust from green badges. Fix with calibrated bars + warnings.
+- Under-trust slows work. Fix with explanations of safeguards.
+
+### References
+- Trust calibration UX studies
+

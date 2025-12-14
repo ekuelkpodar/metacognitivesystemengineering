@@ -1,0 +1,60 @@
+---
+id: requirements-deployment
+title: "Deployment Requirements"
+module: requirements
+level: Intermediate
+summary: "Latencies, cost budgets, safety gates, and rollout plans."
+prerequisites: [requirements-traceability]
+tags: [deployment]
+estimatedTime: "15 min"
+learningObjectives:
+  - "Set latency/cost targets"
+  - "Define rollout and rollback"
+  - "Gate deployments with safety"
+glossaryTerms: [canary, rollback]
+references: ["slo docs"]
+---
+
+## Concept explanation
+Deployment needs explicit SLOs and safety gates. Latency and cost targets align with escalation policies.
+
+<MermaidBlock chart={`flowchart LR
+  Build-->Tests
+  Tests-->Canary
+  Canary--pass-->Rollout
+  Canary--fail-->Rollback
+`} caption="Deployment gate." />
+
+<QuizBlock
+  id="requirements-deploy-quiz"
+  prompt="What precedes rollout?"
+  options=["Nothing", "Safety + regression tests", "UI review", "Luck"]
+  answer={1}
+  explanation="Rollout requires passing safety/regression tests and canary."
+/>
+
+<ExerciseBlock
+  id="requirements-deploy-ex"
+  prompt="Set p95 latency and cost budgets plus a rollback trigger."
+  rubric="Include numeric targets." 
+/>
+
+<ArtifactBlock
+  id="requirements-deploy-artifact"
+  kind="evaluation"
+  description="Deployment gate JSON."
+  starter={`{
+  "latency_p95_ms": 1500,
+  "cost_per_request": 0.02,
+  "rollback_triggers": ["jailbreak_rate>0.01", "latency_p95>2000"]
+}
+`}
+/>
+
+### Failure mode focus
+- No rollback path. Fix with tested script.
+- Latency regressions unnoticed. Fix with online monitors.
+
+### References
+- SLO playbook
+

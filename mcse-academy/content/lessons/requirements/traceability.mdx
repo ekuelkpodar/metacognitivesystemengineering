@@ -1,0 +1,56 @@
+---
+id: requirements-traceability
+title: "Traceability: Goal -> Constraint -> Test -> Telemetry"
+module: requirements
+level: Intermediate
+summary: "Create end-to-end traceability across MCSE artifacts."
+prerequisites: [requirements-meta]
+tags: [traceability]
+estimatedTime: "24 min"
+learningObjectives:
+  - "Link goals to constraints to tests"
+  - "Map telemetry to requirements"
+  - "Build trace matrices"
+glossaryTerms: [traceability, constraint]
+references: ["trace matrix"]
+---
+
+<Callout type="info" title="Concept">
+Traceability stops requirements from drifting. Every goal maps to constraints, to tests, to telemetry fields, and to owners. When one changes, you know what to update.
+</Callout>
+
+<MermaidBlock chart={`graph TD
+  Goal-->Constraint
+  Constraint-->Test
+  Test-->Telemetry
+  Telemetry-->Owner
+`} caption="Trace chain." />
+
+<QuizBlock
+  id="requirements-trace-quiz"
+  prompt="What breaks traceability?"
+  options=["Versioned policies", "Constraints without tests", "Telemetry with policyVersion", "Owners assigned"]
+  answer={1}
+  explanation="Constraints without tests/telemetry break the chain."
+/>
+
+<ExerciseBlock
+  id="requirements-trace-ex"
+  prompt="Build a mini trace matrix with one goal, two constraints, two tests, and telemetry fields."
+  rubric="Include owners." 
+/>
+
+<ArtifactBlock
+  id="requirements-trace-artifact"
+  kind="requirements"
+  description="Trace matrix markdown."
+  starter={`| Goal | Constraint | Test | Telemetry | Owner |\n| --- | --- | --- | --- | --- |\n| Safe responses | No PII exfiltration | Red-team prompts | safety_block event | privacy lead |\n`}
+/>
+
+### Failure mode focus
+- Orphan tests or telemetry. Fix with matrices and CI checks.
+- No owner. Fix with RACI column.
+
+### References
+- Traceability templates
+

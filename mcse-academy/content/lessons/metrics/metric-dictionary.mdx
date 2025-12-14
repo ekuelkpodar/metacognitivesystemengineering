@@ -1,0 +1,66 @@
+---
+id: metrics-dictionary
+title: "Metric Dictionary"
+module: metrics
+level: Intermediate
+summary: "Define MCSE metrics with formulas, measurement, and thresholds."
+prerequisites: [requirements-meta]
+tags: [metrics]
+estimatedTime: "28 min"
+learningObjectives:
+  - "List key MCSE metrics"
+  - "Write definitions and thresholds"
+  - "Assign owners"
+glossaryTerms: [ECE, self-detection, recovery time]
+references: ["metric glossary"]
+---
+
+<Callout type="info" title="Concept">
+Metrics must be unambiguous: name -> definition -> how measured -> threshold -> owner. MCSE adds meta-metrics like calibration error, self-detection rate, recovery time, and jail-break susceptibility.
+</Callout>
+
+<MermaidBlock chart={`graph TD
+  Metrics-->Dash
+  Metrics-->Alerts
+  Metrics-->Postmortem
+`} caption="Metrics feed ops + learning." />
+
+Sample metrics:
+- Accuracy@1: correct answers / total.
+- ECE: bucketed |conf - outcome| average.
+- Self-detection rate: incidents caught by meta-monitor before user.
+- Recovery time: time from anomaly to safe state.
+- Jailbreak rate: blocked unsafe responses / attempts.
+
+<QuizBlock
+  id="metrics-dictionary-quiz"
+  prompt="What belongs in a metric entry?"
+  options=["Name only", "Definition, measurement, threshold, owner", "Emoji", "Nothing"]
+  answer={1}
+  explanation="A good metric has definition, measurement method, threshold, and owner." 
+/>
+
+<ExerciseBlock
+  id="metrics-dictionary-ex"
+  prompt="Add two metrics with thresholds and owners for your system."
+  rubric="Include measurement method." 
+/>
+
+<ArtifactBlock
+  id="metrics-dictionary-artifact"
+  kind="evaluation"
+  description="Metric dictionary JSON."
+  starter={`[
+  {"name":"ece","definition":"expected calibration error","threshold":0.05,"owner":"ml"},
+  {"name":"self_detect_rate","definition":"pct caught before user","threshold":0.7,"owner":"safety"}
+]
+`}
+/>
+
+### Failure mode focus
+- Metric soup with no thresholds. Fix dictionary + owners.
+- Metrics unused. Fix by wiring to dashboards and alerts.
+
+### References
+- Metric glossary template
+

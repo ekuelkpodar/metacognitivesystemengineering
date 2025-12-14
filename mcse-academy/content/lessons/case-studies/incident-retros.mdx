@@ -1,0 +1,55 @@
+---
+id: case-incident-retros
+title: "Incident Retrospectives"
+module: case-studies
+level: Intermediate
+summary: "Cross-case patterns from MCSE incidents."
+prerequisites: [metrics-postmortems]
+tags: [retrospective]
+estimatedTime: "15 min"
+learningObjectives:
+  - "Extract patterns"
+  - "Update playbooks"
+  - "Share learnings"
+glossaryTerms: [postmortem]
+references: ["retro template"]
+---
+
+## Concept explanation
+Aggregate incidents to find patterns: recurring signals, tool classes, or policies that fail. Feed into patterns/anti-patterns and regression tests.
+
+<MermaidBlock chart={`graph TD
+  Incidents-->Themes
+  Themes-->Actions
+  Actions-->Tests
+  Actions-->Policies
+`} caption="Retro loop." />
+
+<QuizBlock
+  id="case-retro-quiz"
+  prompt="What should retros create?"
+  options=["Stories", "Actions + tests + owners", "Nothing", "Posters"]
+  answer={1}
+  explanation="Retros must produce actions/tests/owners." 
+/>
+
+<ExerciseBlock
+  id="case-retro-ex"
+  prompt="Summarize one hypothetical incident and propose two tests to prevent recurrence."
+  rubric="Include owner." 
+/>
+
+<ArtifactBlock
+  id="case-retro-artifact"
+  kind="requirements"
+  description="Retro note."
+  starter={`## Incident Retro\n- Incident: \n- Theme: \n- Actions: \n- Tests to add: \n- Owner: \n`}
+/>
+
+### Failure mode focus
+- Lessons ignored. Fix with updates to tests/policies.
+- Blame culture. Fix with blameless templates.
+
+### References
+- Retro guide
+

@@ -1,0 +1,60 @@
+---
+id: human-hitl
+title: "Human-in-the-Loop as Control System"
+module: human-organization
+level: Intermediate
+summary: "Design human participation as part of meta-cognitive control."
+prerequisites: [control-escalation-patterns]
+tags: [hitl, control]
+estimatedTime: "24 min"
+learningObjectives:
+  - "Place humans in loops"
+  - "Define escalation paths"
+  - "Measure handoff quality"
+glossaryTerms: [HITL, escalation]
+references: ["control with humans"]
+---
+
+<Callout type="info" title="Concept">
+Humans are actuators and critics. Define when they enter, what context they get, and how decisions are logged.
+</Callout>
+
+<MermaidBlock chart={`sequenceDiagram
+  participant User
+  participant Agent
+  participant Human
+  User->>Agent: Task
+  Agent->>Agent: Assess confidence/risk
+  Agent-->>Human: Escalate with context
+  Human-->>Agent: Decision/feedback
+  Agent-->>User: Final response
+`} caption="Human in the loop." />
+
+<QuizBlock
+  id="human-hitl-quiz"
+  prompt="What must an escalation include for humans?"
+  options=["Raw logs only", "Context, risk, attempted plan", "Nothing", "Apology"]
+  answer={1}
+  explanation="Provide context, risk, and attempted plan so humans can act quickly." 
+/>
+
+<ExerciseBlock
+  id="human-hitl-ex"
+  prompt="Define one low-risk and one high-risk path to humans with SLAs."
+  rubric="Include context packet fields." 
+/>
+
+<ArtifactBlock
+  id="human-hitl-artifact"
+  kind="requirements"
+  description="HITL playbook."
+  starter={`## HITL Playbook\n- Trigger: confidence<0.3 or tool risk>0.7\n- Context: task, plan, confidence, risk, memory refs\n- SLA: respond in 5m\n- Decision logging: audit_log events\n`}
+/>
+
+### Failure mode focus
+- Humans get no context. Fix with structured packets.
+- Slow responses. Fix with SLAs and load shedding.
+
+### References
+- Human factors in automation
+

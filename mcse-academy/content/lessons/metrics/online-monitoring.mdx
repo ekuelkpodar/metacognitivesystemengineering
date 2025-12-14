@@ -1,0 +1,61 @@
+---
+id: metrics-online-monitoring
+title: "Online Monitoring and Alerts"
+module: metrics
+level: Intermediate
+summary: "Design online monitors for meta-cog metrics and safety."
+prerequisites: [metrics-offline-eval]
+tags: [monitoring]
+estimatedTime: "18 min"
+learningObjectives:
+  - "Select online monitors"
+  - "Set alert thresholds"
+  - "Route alerts to owners"
+glossaryTerms: [alert]
+references: ["oncall"]
+---
+
+## Concept explanation
+Online monitors extend offline metrics into production with canaries and alerting. Include latency, ECE drift, jailbreak attempts, and tool spend.
+
+<MermaidBlock chart={`graph LR
+  Stream-->Detectors
+  Detectors-->Alerts
+  Alerts-->Oncall
+  Alerts-->Playbook
+`} caption="Online monitoring flow." />
+
+<QuizBlock
+  id="metrics-online-quiz"
+  prompt="What should an alert include?"
+  options=["Owner + severity + link to playbook", "Only a number", "Nothing", "Random emoji"]
+  answer={0}
+  explanation="Alerts need owner, severity, and playbook for action." 
+/>
+
+<ExerciseBlock
+  id="metrics-online-ex"
+  prompt="Define two alerts with thresholds and playbook links."
+  rubric="Include severity." 
+/>
+
+<ArtifactBlock
+  id="metrics-online-artifact"
+  kind="evaluation"
+  description="Alert config JSON."
+  starter={`{
+  "alerts": [
+    {"metric":"jailbreak_rate","threshold":0.01,"severity":"high","playbook":"/playbooks/jailbreak"},
+    {"metric":"latency_p95","threshold":2000,"severity":"medium","playbook":"/playbooks/latency"}
+  ]
+}
+`}
+/>
+
+### Failure mode focus
+- Alert fatigue. Fix with dedupe and severity.
+- Missing playbooks. Fix with links.
+
+### References
+- Alerting best practices
+

@@ -1,0 +1,55 @@
+---
+id: architecture-tooling-layer
+title: "Tooling Layer and Risk Controls"
+module: architecture
+level: Intermediate
+summary: "Manage tool access, risk scoring, and rate limits."
+prerequisites: [architecture-reference]
+tags: [tools, risk]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Score tool risk"
+  - "Apply allow/deny lists"
+  - "Log tool usage"
+glossaryTerms: [tool risk]
+references: ["safety policies"]
+---
+
+## Concept explanation
+Tooling should be mediated: allowlists, risk scores, justification requirements, and budgets per session.
+
+<MermaidBlock chart={`graph LR
+  Plan-->ToolGate[Tool Gate]
+  ToolGate-->Safe[Allow]
+  ToolGate-->Revise[Revise or Block]
+  Revise-->Plan
+`} caption="Tool gate routes decisions." />
+
+<QuizBlock
+  id="architecture-tool-quiz"
+  prompt="What should precede tool execution?"
+  options=["Nothing", "Risk score + policy check", "UI render", "Random"]
+  answer={1}
+  explanation="Risk scoring and policy checks prevent misuse."
+/>
+
+<ExerciseBlock
+  id="architecture-tool-ex"
+  prompt="List your top 3 tools with risk scores and required justification fields."
+  rubric="Tie high risk to tighter controls."
+/>
+
+<ArtifactBlock
+  id="architecture-tool-artifact"
+  kind="policy"
+  description="Tool gate policy."
+  starter={`tools:\n  - name: search\n    risk: 0.2\n    allowed: true\n  - name: code_exec\n    risk: 0.8\n    allowed: false\n    require: justification\n`}
+/>
+
+### Failure mode focus
+- Tool overreach. Mitigate with allowlists + cost budgets.
+- Missing logs. Mitigate with telemetry before/after calls.
+
+### References
+- Safety engine docs
+

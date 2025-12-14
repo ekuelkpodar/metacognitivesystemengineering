@@ -1,0 +1,55 @@
+---
+id: failure-tool-misuse
+title: "Tool Misuse and Overreach"
+module: failure-safety
+level: Intermediate
+summary: "Detect and mitigate unsafe tool usage."
+prerequisites: [architecture-tooling-layer]
+tags: [tools, failure]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Score tool risk"
+  - "Design allow/deny rules"
+  - "Test misuse scenarios"
+glossaryTerms: [tool risk]
+references: ["tool policies"]
+---
+
+## Concept explanation
+Tool misuse arises when unsafe tools are called without justification or outside policy. Add allowlists, justifications, budgets, and audits.
+
+<MermaidBlock chart={`graph LR
+  Plan-->Gate
+  Gate-->Allow
+  Gate-->Block
+  Gate-->Revise
+`} caption="Tool gate decisions." />
+
+<QuizBlock
+  id="failure-tool-quiz"
+  prompt="What should high-risk tools require?"
+  options=["Nothing", "Justification + approval", "Luck", "Silence"]
+  answer={1}
+  explanation="High-risk tools need justification/approval or are blocked." 
+/>
+
+<ExerciseBlock
+  id="failure-tool-ex"
+  prompt="List two misuse scenarios and how to detect them."
+  rubric="Include telemetry signal." 
+/>
+
+<ArtifactBlock
+  id="failure-tool-artifact"
+  kind="policy"
+  description="Tool gate policy."
+  starter={`tools:\n  - name: prod_db\n    risk: 0.9\n    allowed: false\n  - name: search\n    risk: 0.2\n    allowed: true\n`}
+/>
+
+### Failure mode focus
+- Tool overreach. Fix with allowlists.
+- No logs. Fix with telemetry per call.
+
+### References
+- Tooling safety playbook
+

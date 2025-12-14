@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log*
+.DS_Store
+mcse-academy/.next
+mcse-academy/node_modules
+mcse-academy/.turbo
+mcse-academy/out
+mcse-academy/.env*

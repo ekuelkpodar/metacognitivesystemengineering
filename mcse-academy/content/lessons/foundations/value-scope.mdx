@@ -1,0 +1,56 @@
+---
+id: foundations-value-scope
+title: "Value and Scope"
+module: foundations
+level: Beginner
+summary: "Define goals, constraints, and boundaries for MCSE projects."
+prerequisites: [foundations-what-is-mcse]
+tags: [scope, goals]
+estimatedTime: "15 min"
+learningObjectives:
+  - "Define value and constraints"
+  - "Write boundaries and non-goals"
+  - "Tie scope to telemetry and safety"
+glossaryTerms: [goal, constraint, boundary]
+references: ["requirements intro"]
+---
+
+## Concept explanation
+MCSE success is explicit: what to optimize, what to avoid, and how to measure. Boundaries stop scope creep and make governance testable.
+
+<MermaidBlock chart={`graph LR
+  Goals-->Requirements
+  Constraints-->Requirements
+  Requirements-->Telemetry
+  Requirements-->Policies
+  Policies-->Decisions
+`} caption="Goals/constraints drive policies and telemetry." />
+
+<QuizBlock
+  id="foundations-value-quiz"
+  prompt="What belongs in an MCSE boundary?"
+  options=["Stretch goals", "Non-goals and forbidden behaviors", "Color palette", "Cloud provider"]
+  answer={1}
+  explanation="Boundaries include non-goals and forbidden behaviors to constrain cognition."
+/>
+
+<ExerciseBlock
+  id="foundations-value-ex"
+  prompt="Draft three constraints and two non-goals for your agent."
+  rubric="Make them testable and measurable."
+/>
+
+<ArtifactBlock
+  id="foundations-value-artifact"
+  kind="requirements"
+  description="Document value, constraints, and acceptance criteria."
+  starter={`## Value\n- Primary: \n- Secondary: \n\n## Constraints\n- \n- \n\n## Non-goals\n- \n- \n\n## Acceptance\n- Metrics: \n- Safety: \n`}
+/>
+
+### Failure mode focus
+- Implicit goals cause reward hacking; fix with signed constraints and tests.
+- Scope creep hides risk; fix with boundary doc + ADR.
+
+### References
+- Requirements templates
+

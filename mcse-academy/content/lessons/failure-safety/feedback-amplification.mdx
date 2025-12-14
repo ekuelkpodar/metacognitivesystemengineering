@@ -1,0 +1,56 @@
+---
+id: failure-feedback-amplification
+title: "Feedback Loop Amplification & Trust"
+module: failure-safety
+level: Intermediate
+summary: "Prevent bad telemetry from driving bad adaptations and miscalibrated trust."
+prerequisites: [control-drift-modeling]
+tags: [feedback, trust]
+estimatedTime: "16 min"
+learningObjectives:
+  - "Detect feedback amplification"
+  - "Calibrate human trust"
+  - "Add guardrails on adaptation"
+glossaryTerms: [feedback amplification, trust calibration]
+references: ["trust design"]
+---
+
+## Concept explanation
+Bad telemetry can push policies the wrong way, amplifying errors. Human trust can be over/under calibrated. MCSE adds sanity checks, human-in-loop gates, and confidence-aware UI.
+
+<MermaidBlock chart={`graph LR
+  Telemetry-->Policy
+  Policy-->Behavior
+  Behavior-->Telemetry
+  Telemetry-->Checks[Sanity Checks]
+  Checks-->Policy
+`} caption="Break runaway loops with checks." />
+
+<QuizBlock
+  id="failure-feedback-quiz"
+  prompt="How to prevent runaway adaptation?"
+  options=["Auto-update everything", "Change budgets + sanity checks", "Ignore", "Random"]
+  answer={1}
+  explanation="Budgets, sanity checks, and approvals prevent runaway loops." 
+/>
+
+<ExerciseBlock
+  id="failure-feedback-ex"
+  prompt="Define one telemetry sanity check and one trust calibration UI element."
+  rubric="Make both measurable." 
+/>
+
+<ArtifactBlock
+  id="failure-feedback-artifact"
+  kind="policy"
+  description="Adaptation sanity policy."
+  starter={`adaptation_sanity:\n  guards:\n    - metric: ece\n      max_change: 0.02\n    - metric: drift_psi\n      max_change: 0.05\n  trust_ui: "show confidence + evidence"\n`}
+/>
+
+### Failure mode focus
+- Amplified error loops. Fix with sanity checks + human approval.
+- Human over-trust. Fix with calibrated UI + warnings.
+
+### References
+- Trust calibration research
+

@@ -1,0 +1,58 @@
+---
+id: human-operating-cadence
+title: "Operating Cadence for Improvement Loops"
+module: human-organization
+level: Intermediate
+summary: "Set weekly/monthly rhythms for MCSE iteration."
+prerequisites: [human-incentives]
+tags: [cadence]
+estimatedTime: "15 min"
+learningObjectives:
+  - "Define meeting cadence"
+  - "Schedule evaluations"
+  - "Track learning velocity"
+glossaryTerms: [cadence, learning velocity]
+references: ["ops cadence"]
+---
+
+## Concept explanation
+Cadence aligns teams: weekly incident review, biweekly policy board, monthly regression refresh, quarterly roadmap updates.
+
+<MermaidBlock chart={`gantt
+dateFormat  YYYY-MM-DD
+section Weekly
+Postmortems :done, des1, 2024-01-01, 7d
+section Monthly
+Regression refresh :active, des2, 2024-01-01, 30d
+section Quarterly
+Roadmap review : des3, 2024-01-01, 90d
+`} caption="Cadence sketch." />
+
+<QuizBlock
+  id="human-cadence-quiz"
+  prompt="What keeps learning velocity up?"
+  options=["Skipping reviews", "Regular postmortems feeding tests", "No metrics", "Ignoring users"]
+  answer={1}
+  explanation="Regular postmortems that add tests/policies keep learning velocity up." 
+/>
+
+<ExerciseBlock
+  id="human-cadence-ex"
+  prompt="Draft your weekly/biweekly/monthly MCSE rituals."
+  rubric="Include owners and outputs." 
+/>
+
+<ArtifactBlock
+  id="human-cadence-artifact"
+  kind="requirements"
+  description="Cadence plan."
+  starter={`## Cadence\n- Weekly: postmortems + red-team review\n- Biweekly: governance board\n- Monthly: regression suite refresh\n- Quarterly: roadmap review\n`}
+/>
+
+### Failure mode focus
+- Rituals without outputs. Fix with checklists.
+- No owners. Fix with RACI.
+
+### References
+- Ops cadence guides
+
