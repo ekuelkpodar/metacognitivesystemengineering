@@ -91,7 +91,7 @@ export default async function Home() {
             href="/studio"
             className="mt-4 inline-block text-blue-700 hover:underline"
           >
-            Open the MCSE Studio ->
+            Open the MCSE Studio &rarr;
           </Link>
         </div>
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -109,7 +109,7 @@ export default async function Home() {
             href="/labs"
             className="mt-4 inline-block text-blue-700 hover:underline"
           >
-            Launch labs ->
+            Launch labs &rarr;
           </Link>
         </div>
       </section>
